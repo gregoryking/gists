@@ -104,6 +104,21 @@ CREATE (bankAccount3:BankAccount {
 			AccountNumber: "4567890123456789", 
 			Balance: 12345.45 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
 
+// Create Bank Account and connect account holder
+CREATE (bankAccount4:BankAccount { 
+			AccountNumber: "999", 
+			Balance: 30000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
+
+// Create Bank Account and connect account holder
+CREATE (bankAccount5:BankAccount { 
+			AccountNumber: "888", 
+			Balance: 5000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
+
+// Create Bank Account and connect account holder
+CREATE (bankAccount6:BankAccount { 
+			AccountNumber: "777", 
+			Balance: 4000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
+			
 // Create Unsecured Loan and connect 1 account holder
 CREATE (unsecuredLoan3:UnsecuredLoan { 
 			AccountNumber: "5678901234567890-0", 
