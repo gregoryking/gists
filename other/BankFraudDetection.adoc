@@ -207,7 +207,7 @@ RETURN		a
 //output
 //table
 
-==== Return accounts that have balances more than 2 standard deviations from the mean where the account owner shares a phone number with someone
+==== Finding Outliers: Return accounts that have balances more than 2 standard deviations from the mean where the account owner shares a phone number with someone
 
 [source,cypher]
 ----
@@ -223,52 +223,20 @@ RETURN		a
 
 
 
-== Entity Link Analysis
-
-Performing entity link analysis on the above data model is demonstrated below.
-
-==== Find account holders who share more than one piece of legitimate contact information
+==== Find outlying accounts where the accountholders share a bank account with 2 or more people.
 
 [source,cypher]
 ----
-MATCH 		(accountHolder:AccountHolder)-[]->(contactInformation) 
-WITH 		contactInformation, 
-			count(accountHolder) AS RingSize 
-MATCH 		(contactInformation)<-[]-(accountHolder) 
-WITH 		collect(accountHolder.UniqueId) AS AccountHolders, 
-			contactInformation, RingSize
-WHERE 		RingSize > 1 
-RETURN 		AccountHolders AS FraudRing, 
-			labels(contactInformation) AS ContactType, 
-			RingSize
-ORDER BY 	RingSize DESC
-----
-
-//output
-//table
-
-==== Determine the financial risk of a possible fraud ring
-
-[source,cypher]
-----
-MATCH 		(accountHolder:AccountHolder)-[]->(contactInformation) 
-WITH 		contactInformation, 
-			count(accountHolder) AS RingSize 
-MATCH 		(contactInformation)<-[]-(accountHolder), 
-			(accountHolder)-[r:HAS_CREDITCARD|HAS_UNSECUREDLOAN]->(unsecuredAccount)
-WITH 		collect(DISTINCT accountHolder.UniqueId) AS AccountHolders, 
-			contactInformation, RingSize,
-			SUM(CASE type(r)
-				WHEN 'HAS_CREDITCARD' THEN unsecuredAccount.Limit
-				WHEN 'HAS_UNSECUREDLOAN' THEN unsecuredAccount.Balance
-				ELSE 0
-			END) as FinancialRisk
-WHERE 		RingSize > 1
-RETURN 		AccountHolders AS FraudRing, 
-			labels(contactInformation) AS ContactType, 
-			RingSize, 
-			round(FinancialRisk) as FinancialRisk
-ORDER BY 	FinancialRisk DESC
+MATCH (a:BankAccount) 
+WITH (avg(a.Balance)- 2 * stdev(a.Balance)) AS lowerBound,(avg(a.Balance)+ 2 * stdev(a.Balance)) AS upperBound 
+MATCH (a:BankAccount) 
+WHERE a.Balance > upperBound OR a.Balance < lowerBound 
+MATCH (a)<-[r:HAS_BANKACCOUNT]-(i:AccountHolder)-[r2:HAS_PHONENUMBER]->(p:PhoneNumber) 
+WITH p, i 
+MATCH (i)--(p)--(oi:AccountHolder) 
+WITH i, collect(oi) AS otherInds 
+WHERE length(otherInds)>1 
+RETURN i
 ----
 
 //output
