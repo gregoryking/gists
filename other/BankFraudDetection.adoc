@@ -164,20 +164,6 @@ RETURN 		stdev(a.Balance), stdevp(a.Balance), min(a.Balance), max(a.Balance), av
 //output
 //table
 
-==== Return accounts whose balance is greater than the StDev of all balances
-
-[source,cypher]
-----
-MATCH 		(a:BankAccount)
-WITH  		stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg
-MATCH		(a:BankAccount)
-WHERE		a.Balance > accBalAvg
-RETURN		a, a.Balance
-----
-
-//output
-//table
-
 ==== Return accounts that have balances more than 2 standard deviations from the mean
 
 [source,cypher]
@@ -186,7 +172,7 @@ MATCH 		(a:BankAccount)
 WITH  		(avg(a.Balance) - 2 * stdev(a.Balance)) as lowerBound, (avg(a.Balance) + 2 * stdev(a.Balance)) as upperBound
 MATCH		(a:BankAccount)
 WHERE		a.Balance > upperBound OR a.Balance < lowerBound
-RETURN		a, a.Balance
+RETURN		a
 ----
 
 //output
