@@ -34,6 +34,11 @@ CREATE (accountHolder4:AccountHolder {
        		LastName: "Appleseed", 
        		UniqueId: "GregAppleseed" }) 
 
+CREATE (accountHolder5:AccountHolder { 
+       		FirstName: "Greg", 
+       		LastName: "Orangeseed", 
+       		UniqueId: "GregOrangeseed" }) 
+
 CREATE (accountHolder2:AccountHolder { 
 			FirstName: "Jane", 
 			LastName: "Appleseed", 
@@ -155,6 +160,8 @@ CREATE (unsecuredLoan3:UnsecuredLoan {
 // Create Phone Number and connect 1 account holder
 CREATE (phoneNumber2:PhoneNumber { 
 			PhoneNumber: "555-555-1234" })<-[:HAS_PHONENUMBER]-(accountHolder3)
+
+CREATE (accountHolder5)-[:HAS_PHONENUMBER]->(phoneNumber2)
 
 RETURN *
 ----
