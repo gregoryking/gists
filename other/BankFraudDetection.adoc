@@ -237,3 +237,11 @@ ORDER BY 	FinancialRisk DESC
 
 //output
 //table
+
+==== Find the standard deviation of account balances
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+RETURN 		stdev(a)
+----
