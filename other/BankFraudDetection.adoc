@@ -11,7 +11,7 @@ This interactive Neo4j graph tutorial demonstrates the use of simple statistical
 == Banking Graph Data Model
 
 
-Example data model:
+Example data model (not a proper data model / schema, but more an illustration of types of links):
 
 image::https://raw.github.com/neo4j-contrib/gists/master/other/images/BankFraud-1.png[Bank Fraud]
 
