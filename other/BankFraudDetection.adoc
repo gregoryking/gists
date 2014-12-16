@@ -207,7 +207,7 @@ RETURN		a
 //output
 //table
 
-==== Finding Outliers: Return accounts that have balances more than 2 standard deviations from the mean where the account owner shares a phone number with someone
+==== Finding Outliers: Return accounts that have balances more than 2 standard deviations from the mean
 
 [source,cypher]
 ----
