@@ -158,6 +158,21 @@ RETURN		a, a.Balance
 //output
 //table
 
+==== Return accounts that have balances more than 2 standard deviations from the mean
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+WITH  		stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg, (accBalAvg - 2 * accBalStDev) as lowerBound, (accBalAvg + 2 * accBalStDev) as upperBound
+MATCH		(a:BankAccount)
+WHERE		a.Balance > accBalAvg
+RETURN		a, a.Balance
+----
+
+//output
+//table
+
+
 == Entity Link Analysis
 
 Performing entity link analysis on the above data model is demonstrated below.
