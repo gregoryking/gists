@@ -29,6 +29,11 @@ CREATE (accountHolder1:AccountHolder {
        		LastName: "Doe", 
        		UniqueId: "JohnDoe" }) 
 
+CREATE (accountHolder4:AccountHolder { 
+       		FirstName: "Greg", 
+       		LastName: "Appleseed", 
+       		UniqueId: "GregAppleseed" }) 
+
 CREATE (accountHolder2:AccountHolder { 
 			FirstName: "Jane", 
 			LastName: "Appleseed", 
@@ -57,7 +62,7 @@ CREATE (phoneNumber1:PhoneNumber { PhoneNumber: "555-555-5555" })
 // Connect 2 account holders to 1 phone number
 CREATE (accountHolder1)-[:HAS_PHONENUMBER]->(phoneNumber1), 
        (accountHolder2)-[:HAS_PHONENUMBER]->(phoneNumber1)
-
+       (accountHolder4)-[:HAS_PHONENUMBER]->(phoneNumber1)
 // Create SSN
 CREATE (ssn1:SSN { SSN: "241-23-1234" })
 
@@ -194,6 +199,21 @@ RETURN		a
 
 //output
 //table
+
+==== Return accounts that have balances more than 2 standard deviations from the mean where the account owner shares a phone number with someone
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+WITH  		(avg(a.Balance) - 2 * stdev(a.Balance)) as lowerBound, (avg(a.Balance) + 2 * stdev(a.Balance)) as upperBound
+MATCH		(a:BankAccount)
+WHERE		a.Balance > upperBound OR a.Balance < lowerBound
+RETURN		a
+----
+
+//output
+//table
+
 
 
 == Entity Link Analysis
