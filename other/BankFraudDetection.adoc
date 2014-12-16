@@ -171,18 +171,18 @@ RETURN *
 '''
 
 
-==== Return all BankAccounts with their ids and their Balances
+==== Return all BankAccount balances
 
 [source,cypher]
 ----
 MATCH 		(a:BankAccount)
-RETURN 		a.id, a.Balance
+RETURN 		a.Balance
 ----
 
 //output
 //table
 
-==== Find the standard deviation of account balances
+==== Find the standard deviation of the account balances and other simple indicators
 
 [source,cypher]
 ----
@@ -207,7 +207,7 @@ RETURN		a
 //output
 //table
 
-==== Finding Outliers: Return accounts that have balances more than 2 standard deviations from the mean
+==== Finding Outliers: Return accounts that have balances more than 2 standard deviations from the mean (makes little use of the graph database capabilities)
 
 [source,cypher]
 ----
@@ -223,7 +223,7 @@ RETURN		a
 
 
 
-==== Find outlying accounts where the accountholders share a bank account with 2 or more people.
+==== Find outlying accounts where the accountholders share a bank account with 2 or more people (extends the previous query to make use of graph database capability)
 
 [source,cypher]
 ----
