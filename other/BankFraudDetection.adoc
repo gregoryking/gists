@@ -238,6 +238,17 @@ ORDER BY 	FinancialRisk DESC
 //output
 //table
 
+==== Return all BankAccounts with their ids and their Balances
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+RETURN 		a.id, a.Balance
+----
+
+//output
+//table
+
 ==== Find the standard deviation of account balances
 
 [source,cypher]
