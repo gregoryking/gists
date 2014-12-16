@@ -61,7 +61,7 @@ CREATE (phoneNumber1:PhoneNumber { PhoneNumber: "555-555-5555" })
 
 // Connect 2 account holders to 1 phone number
 CREATE (accountHolder1)-[:HAS_PHONENUMBER]->(phoneNumber1), 
-       (accountHolder2)-[:HAS_PHONENUMBER]->(phoneNumber1)
+       (accountHolder2)-[:HAS_PHONENUMBER]->(phoneNumber1),
        (accountHolder4)-[:HAS_PHONENUMBER]->(phoneNumber1)
 // Create SSN
 CREATE (ssn1:SSN { SSN: "241-23-1234" })
