@@ -259,3 +259,16 @@ RETURN 		stdev(a.Balance), stdevp(a.Balance), min(a.Balance), max(a.Balance), av
 
 //output
 //table
+
+==== Set those that are greater than 2 standard deviations from the mean
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+WITH  		a, stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg
+RETURN a, accBalStDev, accBalAvg
+----
+
+//output
+//table
+
