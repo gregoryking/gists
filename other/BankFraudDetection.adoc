@@ -163,9 +163,9 @@ RETURN		a, a.Balance
 [source,cypher]
 ----
 MATCH 		(a:BankAccount)
-WITH  		stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg, (accBalAvg - 2 * accBalStDev) as lowerBound, (accBalAvg + 2 * accBalStDev) as upperBound
+WITH  		(avg(a.Balance) - 2 * stdev(a.Balance)) as lowerBound, (avg(a.Balance) + 2 * stdev(a.Balance)) as upperBound
 MATCH		(a:BankAccount)
-WHERE		a.Balance > accBalAvg
+WHERE		a.Balance > upperBound OR a.Balance < lowerBound
 RETURN		a, a.Balance
 ----
 
