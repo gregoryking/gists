@@ -3,7 +3,7 @@
 :author: Greg King
 :tags: domain:finance, use-case:data-analysis
 
-This interactive Neo4j graph tutorial demonstrates the use of simple statistical measures to identify outliers.  The example queries do not make good use of the graph traversals, but demonstrates how it is possible to caluclate entire grahp level attributes and us these in subsequent sub-queries.
+This interactive Neo4j graph tutorial demonstrates the use of simple statistical measures to identify outliers.
 
 '''
 
