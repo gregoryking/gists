@@ -113,7 +113,7 @@ CREATE (bankAccount3:BankAccount {
 // Create Bank Account and connect account holder
 CREATE (bankAccount4:BankAccount { 
 			AccountNumber: "999", 
-			Balance: 30000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
+			Balance: 40000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
 
 // Create Bank Account and connect account holder
 CREATE (bankAccount5:BankAccount { 
