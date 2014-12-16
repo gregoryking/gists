@@ -95,7 +95,7 @@ CREATE (bankAccount2:BankAccount {
 // Create Bank Account and connect 1 account holder
 CREATE (bankAccount8:BankAccount { 
 			AccountNumber: "555", 
-			Balance: 30000 })<-[:HAS_BANKACCOUNT]-(accountHolder2)
+			Balance: -30000 })<-[:HAS_BANKACCOUNT]-(accountHolder2)
 
 
 // Create Unsecured Loan and connect 1 account holder
