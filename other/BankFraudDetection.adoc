@@ -1,83 +1,17 @@
-= Bank Fraud Detection
+= Banking Example
 :neo4j-version: 2.0.0-RC1
-:author: Kenny Bastani
-:twitter: @kennybastani
-:tags: domain:finance, use-case:fraud-detection
+:author: Greg King
+:tags: domain:finance, use-case:data-analysis
 
-This interactive Neo4j graph tutorial covers bank fraud detection scenarios.
-
-'''
-
-*Table of Contents*
-
-* *Introduction*
-** <<introduction_to_problem, Introduction to Problem>>
-* *Scenario*
-** <<explanation of scenario, Explanation of Scenario>>
-** <<typical_scenario, Typical Scenario>>
-* *Solution*
-** <<explanation_of_solution, Explanation of Solution>>
-** <<how_graph_databases_can_help, How Graph Databases Can Help>>
-* *Data Model*
-** <<bank_fraud_data_model, Bank Fraud Graph Data Model>>
-* *Database Setup*
-** <<sample_data_set, Sample Data Set>>
-* *Cypher Queries*
-** <<entity_link_analysis, Entity Link Analysis>>
-** <<find_account_holders_who_share_more_than_one_piece_of_legitimate_contact_information, Find account holders who share more than one piece of legitimate contact information>>
-** <<determine_the_financial_risk_of_a_possible_fraud_ring , Determine the financial risk of a possible fraud ring>>
+This interactive Neo4j graph tutorial demonstrates the use of simple statistical measures to identify outliers.  The example queries do not make good use of the graph traversals, but demonstrates how it is possible to caluclate entire grahp level attributes and us these in subsequent sub-queries.
 
 '''
 
-== Introduction to Problem
 
-Banks and Insurance companies lose billions of dollars every year to fraud. Traditional methods of fraud detection play an important role in minimizing these losses. However increasingly sophisticated fraudsters have developed a variety of ways to elude discovery, both by working together, and by leveraging various other means of constructing false identities. 
+== Banking Graph Data Model
 
-'''
 
-== Explanation of Scenario
-
-While no fraud prevention measures can ever be perfect, significant opportunity for improvement lies in looking beyond the individual data points, to the connections that link them. Oftentimes these connections go unnoticed until it is too late— something that is unfortunate, as these connections oftentimes hold the best clues.
-
-=== Typical Scenario
-
-While the exact details behind each first-party fraud collusion vary from operation to operation, the pattern below illustrates how fraud rings commonly operate:
-
-* A group of two or more people organize into a fraud ring
-* The ring shares a subset of legitimate contact information, for example phone numbers and addresses, combining them to create a number of synthetic identities
-* Ring members open accounts using these synthetic identities 
-* New accounts are added to the original ones: unsecured credit lines, credit cards, overdraft protection, personal loans, etc. 
-* The accounts are used as normally, with regular purchases and timely payments
-* Banks increase the revolving credit lines over time, due to the observed responsible credit behavior 
-* One day the ring “busts out”, coordinating their activity, maxing out all of their credit lines, and disappearing
-* Sometimes fraudsters will go a step further and bring all of their balances to zero using fake checks immediately before the prior step, doubling the damage
-* Collections processes ensue, but agents are never able to reach the fraudster
-* The uncollectible debt is written off
-
-'''
-
-== Explanation of Solution
-
-Graph databases offer new methods of uncovering fraud rings and other sophisticated scams with a high-level of accuracy, and are capable of stopping advanced fraud scenarios in real-time.
-
-=== How Graph Databases Can Help
-
-Augmenting one’s existing fraud detection infrastructure to support ring detection can be done by running appropriate entity link analysis queries using a graph database, and running checks during key stages in the customer & account lifecycle, such as:
-
-* At the time the account is created
-* During an investigation
-* As soon as a credit balance threshold is hit
-* When a check is bounced
-
-Real-time graph traversals tied to the right kinds of events can help banks identify probable fraud rings: during or even before the Bust-Out occurs.
-
-'''
-
-== Bank Fraud Graph Data Model
-
-Graph databases have emerged as an ideal tool for overcoming these hurdles. Languages like Cypher provide a simple semantic for detecting rings in the graph, navigating connections in memory, in real time. 
-
-The graph data model below represents how the data actually looks to the graph database, and illustrates how one can find rings by simply walking the graph:
+Example data model:
 
 image::https://raw.github.com/neo4j-contrib/gists/master/other/images/BankFraud-1.png[Bank Fraud]
 
@@ -187,6 +121,43 @@ RETURN *
 
 '''
 
+
+==== Return all BankAccounts with their ids and their Balances
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+RETURN 		a.id, a.Balance
+----
+
+//output
+//table
+
+==== Find the standard deviation of account balances
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+RETURN 		stdev(a.Balance), stdevp(a.Balance), min(a.Balance), max(a.Balance), avg(a.Balance)
+----
+
+//output
+//table
+
+==== Return accounts whose balance is greater than the StDev of all balances
+
+[source,cypher]
+----
+MATCH 		(a:BankAccount)
+WITH  		stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg
+MATCH		(a:BankAccount)
+WHERE		a.Balance > accBalAvg
+RETURN		a, a.Balance
+----
+
+//output
+//table
+
 == Entity Link Analysis
 
 Performing entity link analysis on the above data model is demonstrated below.
@@ -237,40 +208,3 @@ ORDER BY 	FinancialRisk DESC
 
 //output
 //table
-
-==== Return all BankAccounts with their ids and their Balances
-
-[source,cypher]
-----
-MATCH 		(a:BankAccount)
-RETURN 		a.id, a.Balance
-----
-
-//output
-//table
-
-==== Find the standard deviation of account balances
-
-[source,cypher]
-----
-MATCH 		(a:BankAccount)
-RETURN 		stdev(a.Balance), stdevp(a.Balance), min(a.Balance), max(a.Balance), avg(a.Balance)
-----
-
-//output
-//table
-
-==== Return accounts whose balance is greater than the StDev of all balances
-
-[source,cypher]
-----
-MATCH 		(a:BankAccount)
-WITH  		stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg
-MATCH		(a:BankAccount)
-WHERE		a.Balance > accBalAvg
-RETURN		a, a.Balance
-----
-
-//output
-//table
-
