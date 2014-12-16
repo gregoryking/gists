@@ -265,8 +265,8 @@ RETURN 		stdev(a.Balance), stdevp(a.Balance), min(a.Balance), max(a.Balance), av
 [source,cypher]
 ----
 MATCH 		(a:BankAccount)
-WITH  		a, stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg
-RETURN a, accBalStDev, accBalAvg
+WITH  		stdev(a.Balance) as accBalStDev, avg(a.Balance) as accBalAvg
+RETURN accBalStDev, accBalAvg
 ----
 
 //output
