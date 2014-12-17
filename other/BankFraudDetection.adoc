@@ -223,7 +223,7 @@ RETURN		a
 
 
 
-==== Find outlying AccountHolders whose accounts are outliers and the accountHolders share a phone number with 2 or more people
+==== Find outlying AccountHolders whose accounts are outliers and who share a phone number with 2 or more people
 [source,cypher]
 ----
 MATCH (a:BankAccount) 
