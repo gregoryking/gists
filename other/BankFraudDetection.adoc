@@ -223,8 +223,7 @@ RETURN		a
 
 
 
-==== Find outlying accounts where the accountholders share a bank account with 2 or more people (extends the previous query to make use of graph database capability)
-
+==== Find outlying AccountHolders whose accounts are outliers and the accountHolders share a phone number with 2 or more people
 [source,cypher]
 ----
 MATCH (a:BankAccount) 
