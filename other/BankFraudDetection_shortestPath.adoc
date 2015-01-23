@@ -171,6 +171,17 @@ RETURN *
 '''
 
 
-==== Return all BankAccount balances
+==== Find a path between John and Matt that doesn't involve addesses, but does involve people
+[source,cypher]
+----
+START node1=node:node_auto_index(FirstName='John'), node2=node:node_auto_index(FirstName='Matt') 
+MATCH p=node1-[r*]-node2 
+WITH tail(nodes(p)) AS middle, p 
+WHERE ALL (nds IN middle 
+           WHERE NOT nds:Address) AND ANY (nds IN middle 
+                                           WHERE nds:AccountHolder) 
+RETURN p
+----
 
-
+//output
+//table
