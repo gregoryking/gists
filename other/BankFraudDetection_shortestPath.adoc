@@ -186,4 +186,5 @@ WHERE ALL (n IN nodes(p)  WHERE 1=length(filter(m IN nodes(p) WHERE m=n))) // un
 RETURN p
 ----
 
-//graph
+//output
+//table
