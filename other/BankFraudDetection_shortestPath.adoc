@@ -179,12 +179,11 @@ RETURN *
 ----
 START node1=node:node_auto_index(FirstName='John'), node2=node:node_auto_index(FirstName='Matt') 
 MATCH p=node1-[r*]-node2 
-WITH nodes(p)[1..-1] AS middle, p, node1, node2 // middle is path exluding start/end points
+WITH nodes(p)[1..-1] AS middle, p // middle is path exluding start/end points
 WHERE ALL (n IN nodes(p)  WHERE 1=length(filter(m IN nodes(p) WHERE m=n))) // unique paths only
 	AND ALL (nds IN middle WHERE NOT nds:Address) // exclude any paths including address nodes
 	AND ANY (nds IN middle WHERE nds:AccountHolder) // path must include at least one accountHolder
 RETURN p
 ----
 
-//output
-//table
+//graph
