@@ -163,6 +163,9 @@ CREATE (phoneNumber2:PhoneNumber {
 
 CREATE (accountHolder5)-[:HAS_PHONENUMBER]->(phoneNumber2)
 
+// To support the testing of returning paths in the query below that must involve an accountHolder, complete an account link between John and Matt
+CREATE (accountHolder1)-[:HAS_BANKACCOUNT]->(bankAccount7)
+
 RETURN *
 ----
 
