@@ -182,4 +182,3 @@ RETURN p
 ----
 
 //output
-//graph
