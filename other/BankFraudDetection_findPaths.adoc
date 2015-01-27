@@ -8,7 +8,7 @@ This gist describes a simple graph and a query to find a path between two nodes.
 '''
 
 
-== Banking Graph Data Model
+== Find specific path(s) between two nodes (Banking Graph)
 
 
 Example data model (not a proper data model / schema, but more an illustration of types of links):
