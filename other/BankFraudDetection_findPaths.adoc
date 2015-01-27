@@ -3,7 +3,7 @@
 :author: Greg King
 :tags: domain:finance, use-case:data-analysis
 
-This interactive Neo4j graph tutorial demonstrates the use of simple statistical measures to identify outliers.
+This gist describes a simple graph and a query to find a path between two nodes.  The paths are filtered to only include paths that do or don't contain certain nodes.  This could be extended to edge types and properties on nodes/edges.
 
 '''
 
@@ -19,6 +19,9 @@ image::https://raw.github.com/neo4j-contrib/gists/master/other/images/BankFraud-
 
 == Sample Data Set
 
+Create statments hidden for readability, resulting graph illustrated below.  Expand to see individual create statements
+
+//hide
 //setup
 [source,cypher]
 ----
@@ -185,6 +188,10 @@ WHERE ALL (n IN nodes(p)  WHERE 1=length(filter(m IN nodes(p) WHERE m=n))) // un
 	AND ANY (nds IN middle WHERE nds:AccountHolder) // path must include at least one accountHolder
 RETURN p
 ----
+
+This example could be extended to rank the paths returned by length. Because this is a simple data set with few matches the length of the match is less relevant.
+
+Unverified: How this query scales to non-trivial data volumes and whether the query plan makes it viable. 
 
 //output
 //table
