@@ -1,4 +1,4 @@
-= Banking Example
+= Find specific path(s) between two nodes (Banking Graph)
 :neo4j-version: 2.0.0-RC1
 :author: Greg King
 :tags: domain:finance, use-case:data-analysis
@@ -8,7 +8,7 @@ This gist describes a simple graph and a query to find a path between two nodes.
 '''
 
 
-== Find specific path(s) between two nodes (Banking Graph)
+== Banking Data
 
 
 Example data model (not a proper data model / schema, but more an illustration of types of links):
