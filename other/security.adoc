@@ -81,8 +81,7 @@ CREATE (claim3)-[:ER]->(person3)
 RETURN *
 ----
 
-//graph
-
+//graph_result
 '''
 
 
