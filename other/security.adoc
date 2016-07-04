@@ -1,4 +1,4 @@
-= Banking Example
+= Security Example
 :neo4j-version: 2.0.0-RC1
 :author: Greg King
 :tags: domain:generic, use-case:data-analysis
