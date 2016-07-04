@@ -117,5 +117,4 @@ WHERE 	all(x in n.Organisations where x in Orgs)
 RETURN n
 ----
 
-//output
-//graph
+//graph_result
