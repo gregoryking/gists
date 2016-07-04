@@ -76,7 +76,7 @@ CREATE (claim3)-[:ER]->(address1)
 		
 CREATE (claim1)-[:ER]->(person1)
 CREATE (claim2)-[:ER]->(person2)
-CREATE (claim3)-[:ER]->(person3);
+CREATE (claim3)-[:ER]->(person3)
 
 RETURN *
 ----
