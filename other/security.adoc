@@ -13,145 +13,70 @@ To be completed
 [source,cypher]
 ----
 
-// Create account holders
-CREATE (accountHolder1:AccountHolder { 
-       		FirstName: "John", 
-       		LastName: "Doe", 
-       		UniqueId: "JohnDoe" }) 
+// Create claims
 
-CREATE (accountHolder4:AccountHolder { 
-       		FirstName: "Greg", 
-       		LastName: "Appleseed", 
-       		UniqueId: "GregAppleseed" }) 
+CREATE (claim1:Claim
+		{ 	name: 			"Claim 1",
+			Domains: 		["Dom1"],
+			Organisations: 	["Org1"]
+			}
+		)
 
-CREATE (accountHolder5:AccountHolder { 
-       		FirstName: "Greg", 
-       		LastName: "Orangeseed", 
-       		UniqueId: "GregOrangeseed" }) 
+CREATE (claim2:Claim
+		{ 	name: 			"Claim 2",
+			Domains: 		["Dom1"],
+			Organisations: 	["Org1","Org2"]
+			}
+		)
+		
+CREATE (claim3:Claim
+		{ 	name: 			"Claim 3",
+			Domains: 		["Dom1"],
+			Organisations: 	["Org2"]
+			}
+		)
 
-CREATE (accountHolder2:AccountHolder { 
-			FirstName: "Jane", 
-			LastName: "Appleseed", 
-			UniqueId: "JaneAppleseed" }) 
+// Create addresses
 
-CREATE (accountHolder3:AccountHolder { 
-			FirstName: "Matt", 
-			LastName: "Smith", 
-			UniqueId: "MattSmith" }) 
+CREATE (address1:Address
+		{ 	name: 			"Address 1",
+			Domains: 		[],
+			Organisations: 	[]
+			}
+		)
 
-// Create Address
-CREATE (address1:Address { 
-			Street: "123 NW 1st Street", 
-			City: "San Francisco", 
-			State: "California", 
-			ZipCode: "94101" })
+// Create people
+		
+CREATE (person1:Person
+		{ 	name: 			"Person 1",
+			Domains: 		[],
+			Organisations: 	[]
+			}
+		)
 
-// Connect 3 account holders to 1 address
-CREATE (accountHolder1)-[:HAS_ADDRESS]->(address1), 
-       (accountHolder2)-[:HAS_ADDRESS]->(address1), 
-       (accountHolder3)-[:HAS_ADDRESS]->(address1)
+CREATE (person2:Person
+		{ 	name: 			"Person 2",
+			Domains: 		[],
+			Organisations: 	[]
+			}
+		)
 
-// Create Phone Number
-CREATE (phoneNumber1:PhoneNumber { PhoneNumber: "555-555-5555" })
+CREATE (person3:Person
+		{ 	name: 			"Person 3",
+			Domains: 		[],
+			Organisations: 	[]
+			}
+		)
 
-// Connect 2 account holders to 1 phone number
-CREATE (accountHolder1)-[:HAS_PHONENUMBER]->(phoneNumber1), 
-       (accountHolder2)-[:HAS_PHONENUMBER]->(phoneNumber1),
-       (accountHolder4)-[:HAS_PHONENUMBER]->(phoneNumber1)
-// Create SSN
-CREATE (ssn1:SSN { SSN: "241-23-1234" })
+// Create relationships
 
-// Connect 2 account holders to 1 SSN
-CREATE (accountHolder2)-[:HAS_SSN]->(ssn1), 
-       (accountHolder3)-[:HAS_SSN]->(ssn1)
-
-// Create SSN and connect 1 account holder
-CREATE (ssn2:SSN { SSN: "241-23-4567" })<-[:HAS_SSN]-(accountHolder1)
-
-// Create Credit Card and connect 1 account holder
-CREATE (creditCard1:CreditCard { 
-			AccountNumber: "1234567890123456", 
-			Limit: 5000, Balance: 1442.23, 
-			ExpirationDate: "01-20", 
-			SecurityCode: "123" })<-[:HAS_CREDITCARD]-(accountHolder1)
-
-// Create Bank Account and connect 1 account holder
-CREATE (bankAccount1:BankAccount { 
-			AccountNumber: "2345678901234567", 
-			Balance: 7054.43 })<-[:HAS_BANKACCOUNT]-(accountHolder1)
-
-// Create Credit Card and connect 1 account holder
-CREATE (creditCard2:CreditCard { 
-			AccountNumber: "1234567890123456", 
-			Limit: 4000, Balance: 2345.56, 
-			ExpirationDate: "02-20", 
-			SecurityCode: "456" })<-[:HAS_CREDITCARD]-(accountHolder2)
-
-// Create Bank Account and connect 1 account holder
-CREATE (bankAccount2:BankAccount { 
-			AccountNumber: "3456789012345678", 
-			Balance: 4231.12 })<-[:HAS_BANKACCOUNT]-(accountHolder2)
-
-// Create Bank Account and connect 1 account holder
-CREATE (bankAccount8:BankAccount { 
-			AccountNumber: "555", 
-			Balance: -30000 })<-[:HAS_BANKACCOUNT]-(accountHolder2)
-
-// Create Bank Account and connect 1 account holder
-CREATE (bankAccount9:BankAccount { 
-			AccountNumber: "555", 
-			Balance: 0 })<-[:HAS_BANKACCOUNT]-(accountHolder2)
-
-// Create Bank Account and connect 1 account holder
-CREATE (bankAccount10:BankAccount { 
-			AccountNumber: "555", 
-			Balance: 0 })<-[:HAS_BANKACCOUNT]-(accountHolder2)
-
-
-
-// Create Unsecured Loan and connect 1 account holder
-CREATE (unsecuredLoan2:UnsecuredLoan { 
-			AccountNumber: "4567890123456789-0", 
-			Balance: 9045.53, 
-			APR: .0541, 
-			LoanAmount: 12000.00 })<-[:HAS_UNSECUREDLOAN]-(accountHolder2)
-
-// Create Bank Account and connect 1 account holder
-CREATE (bankAccount3:BankAccount { 
-			AccountNumber: "4567890123456789", 
-			Balance: 12345.45 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
-
-// Create Bank Account and connect account holder
-CREATE (bankAccount4:BankAccount { 
-			AccountNumber: "999", 
-			Balance: 40000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
-
-// Create Bank Account and connect account holder
-CREATE (bankAccount5:BankAccount { 
-			AccountNumber: "888", 
-			Balance: 5000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
-
-// Create Bank Account and connect account holder
-CREATE (bankAccount6:BankAccount { 
-			AccountNumber: "777", 
-			Balance: 4000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
-
-// Create Bank Account and connect account holder
-CREATE (bankAccount7:BankAccount { 
-			AccountNumber: "666", 
-			Balance: 4000 })<-[:HAS_BANKACCOUNT]-(accountHolder3)
-			
-// Create Unsecured Loan and connect 1 account holder
-CREATE (unsecuredLoan3:UnsecuredLoan { 
-			AccountNumber: "5678901234567890-0", 
-			Balance: 16341.95, APR: .0341, 
-			LoanAmount: 22000.00 })<-[:HAS_UNSECUREDLOAN]-(accountHolder3)
-
-// Create Phone Number and connect 1 account holder
-CREATE (phoneNumber2:PhoneNumber { 
-			PhoneNumber: "555-555-1234" })<-[:HAS_PHONENUMBER]-(accountHolder3)
-
-CREATE (accountHolder5)-[:HAS_PHONENUMBER]->(phoneNumber2)
+CREATE (claim1)-[:ER]->(address1)
+CREATE (claim2)-[:ER]->(address1)
+CREATE (claim3)-[:ER]->(address1)
+		
+CREATE (claim1)-[:ER]->(person1)
+CREATE (claim2)-[:ER]->(person2)
+CREATE (claim3)-[:ER]->(person3);
 
 RETURN *
 ----
@@ -161,72 +86,35 @@ RETURN *
 '''
 
 
-==== Return all BankAccount balances
+==== Calculate the derived Org/Domains for the entities
 
 [source,cypher]
 ----
-MATCH 		(a:BankAccount)
-RETURN 		a.Balance
-----
-
-//output
-//table
-
-==== Find the standard deviation of the account balances and other simple indicators
-
-[source,cypher]
-----
-MATCH 		(a:BankAccount)
-RETURN 		stdev(a.Balance), stdevp(a.Balance), min(a.Balance), max(a.Balance), avg(a.Balance)
-----
-
-//output
-//table
-
-==== Return accounts that have balances more than 2 standard deviations from the mean
-
-[source,cypher]
-----
-MATCH 		(a:BankAccount)
-WITH  		(avg(a.Balance) - 2 * stdev(a.Balance)) as lowerBound, (avg(a.Balance) + 2 * stdev(a.Balance)) as upperBound
-MATCH		(a:BankAccount)
-WHERE		a.Balance > upperBound OR a.Balance < lowerBound
-RETURN		a
-----
-
-//output
-//table
-
-==== Finding Outliers: Return accounts that have balances more than 2 standard deviations from the mean (makes little use of the graph database capabilities)
-
-[source,cypher]
-----
-MATCH 		(a:BankAccount)
-WITH  		(avg(a.Balance) - 2 * stdev(a.Balance)) as lowerBound, (avg(a.Balance) + 2 * stdev(a.Balance)) as upperBound
-MATCH		(a:BankAccount)
-WHERE		a.Balance > upperBound OR a.Balance < lowerBound
-RETURN		a
+// Note: Use of reduce to flatten lists
+// This approach ends up dupicating values, which is not ideal, but still works with following logic.  Method do de-dup not immediately obvious in Cypher
+MATCH (e)
+// Finding things that don't yet have Domains/Orgs (ie entities)
+WHERE size(e.Organisations) = 0 AND size(e.Domains) = 0
+MATCH (e)<-[r:ER]-(d)
+WITH e,REDUCE(output = [], r IN collect(d.Organisations) | output + r) as Organisations, REDUCE(output = [], r IN collect(d.Domains) | output + r) as Domains
+SET e.Organisations = Organisations, e.Domains = Domains
+RETURN e
 ----
 
 //output
 //table
 
 
-
-==== Find outlying AccountHolders whose accounts are outliers and who share a phone number with 2 or more people
+==== Find the nodes a user has ALL Org/Dom permissions to see 
 [source,cypher]
 ----
-MATCH (a:BankAccount) 
-WITH (avg(a.Balance)- 2 * stdev(a.Balance)) AS lowerBound,(avg(a.Balance)+ 2 * stdev(a.Balance)) AS upperBound 
-MATCH (a:BankAccount) 
-WHERE a.Balance > upperBound OR a.Balance < lowerBound 
-MATCH (a)<-[r:HAS_BANKACCOUNT]-(i:AccountHolder)-[r2:HAS_PHONENUMBER]->(p:PhoneNumber) 
-WITH p, i 
-MATCH (i)--(p)--(oi:AccountHolder) 
-WITH i, collect(oi) AS otherInds 
-WHERE length(otherInds)>1 
-RETURN i
+// Set the Domain and Organisation permissions permitted
+WITH ["Org2","Org5"] as Orgs, ["Dom1","Dom2"] as Doms
+MATCH (n)
+WHERE 	all(x in n.Organisations where x in Orgs)
+		AND
+		all(x in n.Domains where x in Doms)
+RETURN n
 ----
 
-//output
-//table
+//graph
